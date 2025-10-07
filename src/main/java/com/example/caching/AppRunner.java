@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class AppRunner implements CommandLineRunner {
 
@@ -22,7 +24,9 @@ public class AppRunner implements CommandLineRunner {
         bookRepository.save(new Book("isbn-4567", "Spring Boot Guide"));
 
         logger.info("Fetching from DB...");
-        logger.info(bookRepository.findByIsbn("isbn-1234").toString());
-        logger.info(bookRepository.findByIsbn("isbn-1234").toString()); // 2da vez: desde caché
+        List<Book> books = bookRepository.findByIsbn("isbn-1234");
+        for (Book book : books) {
+            logger.info(book.toString());
+        }
     }
 }

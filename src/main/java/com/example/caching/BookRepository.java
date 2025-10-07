@@ -12,5 +12,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByTitle(String title);
 
     @Cacheable("books")
-    Book findByIsbn(String isbn);
+    List<Book> findByIsbn(String isbn);  // Cambié a List<Book>
+
 }
