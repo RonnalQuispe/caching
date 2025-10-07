@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 public class AppRunner implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(AppRunner.class);
-
     private final BookRepository bookRepository;
 
     public AppRunner(BookRepository bookRepository) {
@@ -17,14 +16,13 @@ public class AppRunner implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        logger.info(".... Fetching books");
-        logger.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
-        logger.info("isbn-4567 -->" + bookRepository.getByIsbn("isbn-4567"));
-        logger.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
-        logger.info("isbn-4567 -->" + bookRepository.getByIsbn("isbn-4567"));
-        logger.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
-        logger.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
-    }
+    public void run(String... args) {
+        logger.info("Saving books...");
+        bookRepository.save(new Book("isbn-1234", "Java Basics"));
+        bookRepository.save(new Book("isbn-4567", "Spring Boot Guide"));
 
+        logger.info("Fetching from DB...");
+        logger.info(bookRepository.findByIsbn("isbn-1234").toString());
+        logger.info(bookRepository.findByIsbn("isbn-1234").toString()); // 2da vez: desde caché
+    }
 }

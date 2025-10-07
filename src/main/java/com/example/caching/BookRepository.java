@@ -1,6 +1,16 @@
 package com.example.caching;
 
-public interface BookRepository
-{
-    Book getByIsbn(String isbn);
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface BookRepository extends JpaRepository<Book, Long> {
+
+    @Cacheable("books")
+    List<Book> findByTitle(String title);
+
+    @Cacheable("books")
+    Book findByIsbn(String isbn);
 }
